@@ -25,10 +25,9 @@ export const SOCIAL_LINKS = [
 ];
 
 export const CLUB_STATS = [
-  { label: 'عضو نشط', value: '+500', iconName: 'Users' },
+  { label: 'عضو نشط', value: '25', iconName: 'Users' },
   { label: 'برنامج ومبادرة', value: '+35', iconName: 'Award' },
-  { label: 'ولاية مغطاة', value: '58', iconName: 'MapPin' },
-  { label: 'ساعة تطوعية', value: '+12,000', iconName: 'Clock' },
+  { label: 'ولاية مغطاة', value: '1', iconName: 'MapPin' },
 ];
 
 export const CLUB_PROGRAMS: ProgramItem[] = [
@@ -110,6 +109,7 @@ export const CLUB_PARTNERS: PartnerItem[] = [
   { id: 'part-1', name: 'وزارة الشباب والرياضة', logo: '/assets/icons/partner1.png' },
   { id: 'part-2', name: 'Dz Young Leaders', logo: '/assets/icons/partner2.png' },
   { id: 'part-3', name: 'دار الشباب لبلدية بني مستار', logo: '/assets/icons/partner3.png' },
+  { id: 'part-4', name: 'مديرية الشباب والرياضة تلمسان', logo: '/assets/icons/partner4.png' },
 ];
 
 export const INTERESTS_LIST = [

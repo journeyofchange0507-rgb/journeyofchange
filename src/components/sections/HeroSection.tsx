@@ -110,12 +110,12 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 35 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.4 }}
-          className="mt-16 sm:mt-20 pt-10 border-t border-neutral-200/60 dark:border-neutral-800/60 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-5xl mx-auto"
+          className="mt-16 sm:mt-20 pt-10 border-t border-neutral-200/60 dark:border-neutral-800/60 flex flex-wrap justify-center gap-6 sm:gap-8 max-w-5xl mx-auto"
         >
-          {CLUB_STATS.map((stat, idx) => (
+          {CLUB_STATS.map((stat) => (
             <div
               key={stat.label}
-              className="p-4 sm:p-6 rounded-2xl bg-white/50 dark:bg-neutral-900/40 border border-neutral-200/50 dark:border-neutral-800/50 backdrop-blur-sm shadow-sm hover:border-emerald-500/50 transition-colors"
+              className="w-44 p-4 sm:p-6 rounded-2xl bg-white/50 dark:bg-neutral-900/40 border border-neutral-200/50 dark:border-neutral-800/50 backdrop-blur-sm shadow-sm hover:border-emerald-500/50 transition-colors text-center"
             >
               <div className="text-2xl sm:text-4xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tight">
                 {stat.value}
@@ -126,6 +126,7 @@ export function HeroSection() {
             </div>
           ))}
         </motion.div>
+
       </div>
     </section>
   );

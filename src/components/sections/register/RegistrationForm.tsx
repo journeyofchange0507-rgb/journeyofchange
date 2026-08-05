@@ -39,6 +39,8 @@ function RegistrationFormContent() {
       birthDate: '',
       gender: undefined,
       address: '',
+      telegram: '',
+      profilePicture: '',
       interests: [],
       otherInterests: '',
       hobbies: [],
@@ -99,7 +101,7 @@ function RegistrationFormContent() {
     let fieldsToValidate: (keyof FullRegisterInput)[] = [];
     switch (currentStep) {
       case 1:
-        fieldsToValidate = ['fullName', 'phone', 'email', 'wilaya', 'commune', 'birthDate', 'gender'];
+        fieldsToValidate = ['fullName', 'phone', 'email', 'wilaya', 'commune', 'birthDate', 'gender', 'telegram', 'profilePicture'];
         break;
       case 2:
         fieldsToValidate = ['interests'];

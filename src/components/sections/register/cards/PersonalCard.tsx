@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { FullRegisterInput } from '@/lib/validations/register-schema';
 import { useAlgeriaCities } from '@/hooks/useAlgeriaCities';
-import { User, Phone, Mail, MapPin, Calendar, Users, Home } from 'lucide-react';
+import { User, Phone, Mail, MapPin, Calendar, Users, Home, Send, Camera, Upload } from 'lucide-react';
 
 interface PersonalCardProps {
   form: UseFormReturn<FullRegisterInput, any, any>;
@@ -225,6 +225,73 @@ export function PersonalCard({ form }: PersonalCardProps) {
             {...register('address')}
             className="w-full px-4 py-3 rounded-xl bg-neutral-50 dark:bg-neutral-800/80 border border-neutral-200 dark:border-neutral-700 text-sm transition-all focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/30"
           />
+        </div>
+
+        {/* معرف التلغرام */}
+        <div className="space-y-2 sm:col-span-2">
+          <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 flex items-center gap-1.5">
+            <Send className="w-4 h-4 text-blue-500" />
+            <span>معرف تلغرام الخاص بك <span className="text-red-500">*</span></span>
+          </label>
+          <input
+            type="text"
+            placeholder="@username"
+            dir="ltr"
+            {...register('telegram')}
+            className={`w-full px-4 py-3 rounded-xl bg-neutral-50 dark:bg-neutral-800/80 border text-sm text-right transition-all focus:outline-none focus:ring-2 ${
+              errors.telegram
+                ? 'border-red-500 focus:ring-red-500/30 bg-red-50/50 dark:bg-red-950/20'
+                : 'border-neutral-200 dark:border-neutral-700 focus:border-emerald-500 focus:ring-emerald-500/30'
+            }`}
+          />
+          {errors.telegram && (
+            <p className="text-xs text-red-500 font-medium">{errors.telegram.message}</p>
+          )}
+        </div>
+
+        {/* الصورة الشخصية */}
+        <div className="space-y-2 sm:col-span-2">
+          <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 flex items-center gap-1.5">
+            <Camera className="w-4 h-4 text-emerald-500" />
+            <span>الصورة الشخصية <span className="text-red-500">*</span></span>
+          </label>
+          <div className="flex items-center gap-4">
+            <div className="relative w-20 h-20 rounded-full border-2 border-dashed border-neutral-300 dark:border-neutral-700 overflow-hidden flex-shrink-0 bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
+              {watch('profilePicture') ? (
+                <img src={watch('profilePicture')} alt="Profile Preview" className="w-full h-full object-cover" />
+              ) : (
+                <User className="w-8 h-8 text-neutral-400" />
+              )}
+            </div>
+            <div className="flex-1">
+              <label className={`flex flex-col items-center justify-center w-full h-20 border-2 border-dashed rounded-xl cursor-pointer transition-all ${
+                errors.profilePicture ? 'border-red-500 bg-red-50/50 dark:bg-red-950/20' : 'border-neutral-300 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-800/80 hover:border-emerald-500'
+              }`}>
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <Upload className="w-5 h-5 text-neutral-500 dark:text-neutral-400 mb-1" />
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400"><span className="font-semibold text-emerald-600 dark:text-emerald-400">اضغط لرفع صورة</span> أو اسحبها هنا</p>
+                </div>
+                <input 
+                  type="file" 
+                  className="hidden" 
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        setValue('profilePicture', reader.result as string, { shouldValidate: true });
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                />
+              </label>
+              {errors.profilePicture && (
+                <p className="text-xs text-red-500 font-medium mt-1">{errors.profilePicture.message}</p>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

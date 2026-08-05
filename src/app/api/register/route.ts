@@ -12,11 +12,7 @@ export async function POST(req: Request) {
     });
 
     // رابط Google Apps Script Web App أو Webhook (يتم وضعه في ملف .env.local أو كقيمة افتراضية هنا)
-    const webhookUrl =
-      process.env.GOOGLE_SHEETS_WEBHOOK_URL ||
-      process.env.NEXT_PUBLIC_GOOGLE_SHEETS_URL ||
-      process.env.SHEETS_WEBHOOK_URL ||
-      'https://script.google.com/macros/s/AKfycbxU1n98NM51eRBlmNfz0cuIaavFE8N9EtaXpFg--BYCzSdKjIfHykGVvgk-Meswg3D0/exec';
+    const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
 
     if (webhookUrl) {
       try {
@@ -28,10 +24,12 @@ export async function POST(req: Request) {
           body: JSON.stringify(data),
         });
 
+        const responseText = await response.text();
+        
         if (!response.ok) {
-          console.warn('⚠️ [API Route] Google Sheets Webhook returned status:', response.status);
+          console.warn('⚠️ [API Route] Google Sheets Webhook returned status:', response.status, responseText);
         } else {
-          console.log('✅ [API Route] Successfully forwarded to Google Sheets!');
+          console.log('✅ [API Route] Google Sheets Webhook responded:', responseText);
         }
       } catch (webhookError) {
         console.error('❌ [API Route] Error sending to Google Sheets webhook:', webhookError);
@@ -39,7 +37,6 @@ export async function POST(req: Request) {
     } else {
       console.log('ℹ️ [API Route] No GOOGLE_SHEETS_WEBHOOK_URL set in .env.local. Data logged locally.');
     }
-
     return NextResponse.json({
       success: true,
       message: 'تم إرسال طلب انضمامك بنجاح!',
