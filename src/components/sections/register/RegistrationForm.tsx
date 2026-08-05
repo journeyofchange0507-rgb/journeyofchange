@@ -140,15 +140,17 @@ function RegistrationFormContent() {
   const onSubmit = async (data: FullRegisterInput) => {
     setIsSubmitting(true);
     try {
-      const res = await fetch('/api/register', {
+      // نرسل الطلب مباشرة إلى جوجل شيت لتفادي مشاكل الاستضافات العادية (Static Hosting)
+      const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxU1n98NM51eRBlmNfz0cuIaavFE8N9EtaXpFg--BYCzSdKjIfHykGVvgk-Meswg3D0/exec';
+      
+      await fetch(WEBHOOK_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        mode: 'no-cors', // مهم جداً لتخطي حماية المتصفح (CORS) وإرسال البيانات مباشرة
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(data),
       });
-
-      if (!res.ok) {
-        throw new Error('فشل إرسال الاستمارة إلى الخادم.');
-      }
 
       console.log('Sanitized & Validated Registration Data Sent:', data);
       
