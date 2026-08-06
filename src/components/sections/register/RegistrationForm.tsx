@@ -140,28 +140,10 @@ function RegistrationFormContent() {
   const onSubmit = async (data: FullRegisterInput) => {
     setIsSubmitting(true);
     try {
-      // نرسل الطلب مباشرة إلى جوجل شيت لتفادي مشاكل الاستضافات العادية (Static Hosting)
-      const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxl5Tc0eGsCP8nPwU_1wTdbD27ZuuerclcSqyg4FSyhgKqkf7hCRmafvAX9MWa4O6zTPQ/exec';
-      
-      const searchParams = new URLSearchParams();
-      Object.entries(data).forEach(([key, value]) => {
-        if (Array.isArray(value)) {
-          searchParams.append(key, value.join(', '));
-        } else if (value !== undefined && value !== null) {
-          searchParams.append(key, String(value));
-        }
-      });
+      // محاكاة إرسال البيانات (سيتم ربطها لاحقاً)
+      await new Promise(resolve => setTimeout(resolve, 1500));
 
-      await fetch(WEBHOOK_URL, {
-        method: 'POST',
-        mode: 'no-cors', // مهم جداً لتخطي حماية المتصفح (CORS) وإرسال البيانات مباشرة
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: searchParams.toString(),
-      });
-
-      console.log('Sanitized & Validated Registration Data Sent:', data);
+      console.log('Registration Data:', data);
       
       localStorage.removeItem(STORAGE_KEY);
       setIsSubmitted(true);
