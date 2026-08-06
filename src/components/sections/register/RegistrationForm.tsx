@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
-import { ArrowRight, ArrowLeft, CheckCircle2, RotateCcw, Send, Sparkles, ShieldCheck } from 'lucide-react';
+import { ArrowRight, ArrowLeft, CheckCircle2, Send } from 'lucide-react';
 
 import { fullRegisterSchema, FullRegisterInput } from '@/lib/validations/register-schema';
 import { useFormProgress } from '@/hooks/useFormProgress';
@@ -79,9 +79,7 @@ function RegistrationFormContent() {
       try {
         const parsed = JSON.parse(saved);
         reset(parsed);
-        toast.info('تم استرجاع مسودة استمارتك المحفوظة تلقائياً', {
-          icon: <RotateCcw className="w-4 h-4 text-emerald-500" />,
-        });
+        toast.info('تم استرجاع مسودة استمارتك المحفوظة تلقائياً');
       } catch (e) {
         console.error('Failed to parse draft', e);
       }
@@ -139,17 +137,12 @@ function RegistrationFormContent() {
   const onSubmit = async (data: FullRegisterInput) => {
     setIsSubmitting(true);
     try {
-      const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzgiUvc0DLBPTeeQMc_EKK5qkMTtTSzcdnj8xMO51t8n1Pj0Vy_warWEd0KGcFBnhl7/exec';
-      
-      const res = await fetch(WEBHOOK_URL, {
+      const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbypHaxfnwt1bm5FkQL79kWWtFBfpxxsB8B9_NoDQbsT6IGzGJxMO5S6zUV3xDCjTvs7/exec';
+      await fetch(WEBHOOK_URL, {
         method: 'POST',
-        // 'text/plain' يمنع متصفحك من إرسال طلب OPTIONS (CORS preflight)
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(data),
       });
-
-      console.log('Sanitized & Validated Registration Data Sent:', data);
-      
       localStorage.removeItem(STORAGE_KEY);
       setIsSubmitted(true);
       toast.success('تم إرسال طلب انضمامك إلى نادي رحلة التغيير بنجاح!');
@@ -159,15 +152,6 @@ function RegistrationFormContent() {
       toast.error('حدث خطأ أثناء إرسال الاستمارة، يرجى المحاولة لاحقاً.');
     } finally {
       setIsSubmitting(false);
-    }
-  };
-
-  const handleResetDraft = () => {
-    if (confirm('هل أنت متأكد من رغبتك في مسح جميع البيانات والبدء من جديد؟')) {
-      localStorage.removeItem(STORAGE_KEY);
-      reset();
-      setCurrentStep(1);
-      toast.success('تم تصفير الاستمارة وبدء طلب جديد.');
     }
   };
 
@@ -266,16 +250,6 @@ function RegistrationFormContent() {
                 <span>الخطوة السابقة</span>
               </button>
             )}
-
-            <button
-              type="button"
-              onClick={handleResetDraft}
-              className="p-3 rounded-xl text-neutral-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all text-xs font-semibold flex items-center gap-1.5"
-              title="مسح المسودة وبدء استمارة جديدة"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">تصفير</span>
-            </button>
           </div>
 
           <div className="w-full sm:w-auto">
@@ -297,7 +271,7 @@ function RegistrationFormContent() {
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">
                     <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    <span>جاري التحقق والإرسال...</span>
+                    <span>جاري الإرسال...</span>
                   </span>
                 ) : (
                   <>
