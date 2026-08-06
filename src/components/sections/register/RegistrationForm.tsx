@@ -140,10 +140,34 @@ function RegistrationFormContent() {
   const onSubmit = async (data: FullRegisterInput) => {
     setIsSubmitting(true);
     try {
-      // محاكاة إرسال البيانات (سيتم ربطها لاحقاً)
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // سيتم وضع الرابط هنا بعد إنشائه
+      const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzGaloOzy7XYBvqit7du8BW55dpDZrOKbvxcSrgNrwsNcFhsyp_SO0BGL1dyLMFJ_UR/exec';
+      
+      const searchParams = new URLSearchParams();
+      Object.entries(data).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          searchParams.append(key, value.join(', '));
+        } else if (value !== undefined && value !== null) {
+          searchParams.append(key, String(value));
+        }
+      });
 
-      console.log('Registration Data:', data);
+      if (WEBHOOK_URL) {
+        await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: searchParams.toString(),
+        });
+      } else {
+        // إذا لم يتم وضع الرابط، نكتفي بمحاكاة التحميل
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        console.warn('تنبيه: لم يتم وضع رابط Webhook، البيانات لم تُرسل.');
+      }
+
+      console.log('Registration Data Processed:', data);
       
       localStorage.removeItem(STORAGE_KEY);
       setIsSubmitted(true);
