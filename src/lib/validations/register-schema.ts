@@ -40,7 +40,6 @@ export const personalDataSchema = z.object({
     .string({ message: 'معرف التلغرام مطلوب' })
     .min(3, 'يرجى إدخال معرف تلغرام صحيح')
     .trim(),
-  profilePicture: z.string().min(1, 'الصورة الشخصية مطلوبة'),
 });
 
 export const interestsSchema = z.object({

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { FullRegisterInput } from '@/lib/validations/register-schema';
 import { useAlgeriaCities } from '@/hooks/useAlgeriaCities';
-import { User, Phone, Mail, MapPin, Calendar, Users, Home, Send, Camera, Upload } from 'lucide-react';
+import { User, Phone, Mail, MapPin, Calendar, Users, Home, Send } from 'lucide-react';
 
 interface PersonalCardProps {
   form: UseFormReturn<FullRegisterInput, any, any>;
@@ -249,53 +249,7 @@ export function PersonalCard({ form }: PersonalCardProps) {
           )}
         </div>
 
-        {/* الصورة الشخصية */}
-        <div className="space-y-2 sm:col-span-2">
-          <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 flex items-center gap-1.5">
-            <Camera className="w-4 h-4 text-emerald-500" />
-            <span>الصورة الشخصية <span className="text-red-500">*</span></span>
-          </label>
-          <div className="flex items-center gap-4">
-            <div className="relative w-20 h-20 rounded-full border-2 border-dashed border-neutral-300 dark:border-neutral-700 overflow-hidden flex-shrink-0 bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
-              {watch('profilePicture') ? (
-                <img src={watch('profilePicture')} alt="Profile Preview" className="w-full h-full object-cover" />
-              ) : (
-                <User className="w-8 h-8 text-neutral-400" />
-              )}
-            </div>
-            <div className="flex-1">
-              <label className={`relative flex flex-col items-center justify-center w-full h-20 border-2 border-dashed rounded-xl cursor-pointer transition-all ${
-                errors.profilePicture ? 'border-red-500 bg-red-50/50 dark:bg-red-950/20' : 'border-neutral-300 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-800/80 hover:border-emerald-500'
-              }`}>
-                <div className="flex flex-col items-center justify-center pt-5 pb-6 pointer-events-none">
-                  <Upload className="w-5 h-5 text-neutral-500 dark:text-neutral-400 mb-1" />
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400 text-center px-2">
-                    <span className="font-semibold text-emerald-600 dark:text-emerald-400">اضغط لرفع صورة</span>
-                    <span className="hidden sm:inline"> أو اسحبها هنا</span>
-                  </p>
-                </div>
-                <input 
-                  type="file" 
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" 
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) {
-                      const reader = new FileReader();
-                      reader.onloadend = () => {
-                        setValue('profilePicture', reader.result as string, { shouldValidate: true });
-                      };
-                      reader.readAsDataURL(file);
-                    }
-                  }}
-                />
-              </label>
-              {errors.profilePicture && (
-                <p className="text-xs text-red-500 font-medium mt-1">{errors.profilePicture.message}</p>
-              )}
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
   );
