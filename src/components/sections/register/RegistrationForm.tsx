@@ -140,34 +140,16 @@ function RegistrationFormContent() {
   const onSubmit = async (data: FullRegisterInput) => {
     setIsSubmitting(true);
     try {
-      // سيتم وضع الرابط هنا بعد إنشائه
-      const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzGaloOzy7XYBvqit7du8BW55dpDZrOKbvxcSrgNrwsNcFhsyp_SO0BGL1dyLMFJ_UR/exec';
+      const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzgiUvc0DLBPTeeQMc_EKK5qkMTtTSzcdnj8xMO51t8n1Pj0Vy_warWEd0KGcFBnhl7/exec';
       
-      const searchParams = new URLSearchParams();
-      Object.entries(data).forEach(([key, value]) => {
-        if (Array.isArray(value)) {
-          searchParams.append(key, value.join(', '));
-        } else if (value !== undefined && value !== null) {
-          searchParams.append(key, String(value));
-        }
+      const res = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        // 'text/plain' يمنع متصفحك من إرسال طلب OPTIONS (CORS preflight)
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(data),
       });
 
-      if (WEBHOOK_URL) {
-        await fetch(WEBHOOK_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: searchParams.toString(),
-        });
-      } else {
-        // إذا لم يتم وضع الرابط، نكتفي بمحاكاة التحميل
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        console.warn('تنبيه: لم يتم وضع رابط Webhook، البيانات لم تُرسل.');
-      }
-
-      console.log('Registration Data Processed:', data);
+      console.log('Sanitized & Validated Registration Data Sent:', data);
       
       localStorage.removeItem(STORAGE_KEY);
       setIsSubmitted(true);
