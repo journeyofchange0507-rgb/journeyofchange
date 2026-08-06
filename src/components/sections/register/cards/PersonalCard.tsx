@@ -264,16 +264,19 @@ export function PersonalCard({ form }: PersonalCardProps) {
               )}
             </div>
             <div className="flex-1">
-              <label className={`flex flex-col items-center justify-center w-full h-20 border-2 border-dashed rounded-xl cursor-pointer transition-all ${
+              <label className={`relative flex flex-col items-center justify-center w-full h-20 border-2 border-dashed rounded-xl cursor-pointer transition-all ${
                 errors.profilePicture ? 'border-red-500 bg-red-50/50 dark:bg-red-950/20' : 'border-neutral-300 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-800/80 hover:border-emerald-500'
               }`}>
-                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                <div className="flex flex-col items-center justify-center pt-5 pb-6 pointer-events-none">
                   <Upload className="w-5 h-5 text-neutral-500 dark:text-neutral-400 mb-1" />
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400"><span className="font-semibold text-emerald-600 dark:text-emerald-400">اضغط لرفع صورة</span> أو اسحبها هنا</p>
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400 text-center px-2">
+                    <span className="font-semibold text-emerald-600 dark:text-emerald-400">اضغط لرفع صورة</span>
+                    <span className="hidden sm:inline"> أو اسحبها هنا</span>
+                  </p>
                 </div>
                 <input 
                   type="file" 
-                  className="hidden" 
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" 
                   accept="image/*"
                   onChange={(e) => {
                     const file = e.target.files?.[0];
