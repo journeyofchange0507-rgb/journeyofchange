@@ -106,7 +106,6 @@ export const RECENT_ACTIVITIES: ActivityItem[] = [
 ];
 
 export const CLUB_PARTNERS: PartnerItem[] = [
-  { id: 'part-1', name: 'وزارة الشباب والرياضة', logo: '/assets/icons/partner1.png' },
   { id: 'part-2', name: 'Dz Young Leaders', logo: '/assets/icons/partner2.png' },
   { id: 'part-4', name: 'مديرية الشباب والرياضة تلمسان', logo: '/assets/icons/partner4.png' },
   { id: 'part-5', name: 'ديوان مؤسسات الشباب ولاية تلمسان', logo: '/assets/icons/partner5.png' },
