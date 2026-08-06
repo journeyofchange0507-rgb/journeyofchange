@@ -141,7 +141,7 @@ function RegistrationFormContent() {
     setIsSubmitting(true);
     try {
       // نرسل الطلب مباشرة إلى جوجل شيت لتفادي مشاكل الاستضافات العادية (Static Hosting)
-      const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxU1n98NM51eRBlmNfz0cuIaavFE8N9EtaXpFg--BYCzSdKjIfHykGVvgk-Meswg3D0/exec';
+      const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzgiUvc0DLBPTeeQMc_EKK5qkMTtTSzcdnj8xMO51t8n1Pj0Vy_warWEd0KGcFBnhl7/exec';
       
       const searchParams = new URLSearchParams();
       Object.entries(data).forEach(([key, value]) => {
