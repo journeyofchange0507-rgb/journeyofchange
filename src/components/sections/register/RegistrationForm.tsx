@@ -143,13 +143,22 @@ function RegistrationFormContent() {
       // نرسل الطلب مباشرة إلى جوجل شيت لتفادي مشاكل الاستضافات العادية (Static Hosting)
       const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxU1n98NM51eRBlmNfz0cuIaavFE8N9EtaXpFg--BYCzSdKjIfHykGVvgk-Meswg3D0/exec';
       
+      const searchParams = new URLSearchParams();
+      Object.entries(data).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          searchParams.append(key, value.join(', '));
+        } else if (value !== undefined && value !== null) {
+          searchParams.append(key, String(value));
+        }
+      });
+
       await fetch(WEBHOOK_URL, {
         method: 'POST',
         mode: 'no-cors', // مهم جداً لتخطي حماية المتصفح (CORS) وإرسال البيانات مباشرة
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify(data),
+        body: searchParams.toString(),
       });
 
       console.log('Sanitized & Validated Registration Data Sent:', data);
